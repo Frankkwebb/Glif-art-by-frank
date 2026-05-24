@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glifs by Frank</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Caveat:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4ede0;--navy:#1a1f3c;--gold:#e8a020;
+  --rust:#c0401a;--maroon:#7a1c1c;--text:#1a1f3c;--muted:#6b6478;
+  --cream:#faf6ee;--cell-bg:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 44px;background:rgba(244,237,224,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,31,60,.07)}
+.nav-logo{font-family:'Fredoka One',sans-serif;font-size:20px;display:flex;align-items:center;gap:1px}
+.nl-G{color:var(--navy)}.nl-L{color:var(--gold)}.nl-i{color:var(--rust)}.nl-F{color:var(--maroon)}.nl-S{color:var(--navy)}
+.nav-by{font-family:'Caveat',cursive;font-size:16px;color:var(--muted);margin-left:6px}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-cta{background:var(--rust);color:#fff;padding:8px 22px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 24px 80px}
+.hero-logo{display:flex;align-items:center;margin-bottom:20px;animation:fadeUp .8s ease both}
+.logo-letter{font-family:'Fredoka One',sans-serif;font-size:clamp(72px,12vw,130px);line-height:1;position:relative}
+.logo-dot{display:inline-block;width:.18em;height:.18em;border-radius:50%;position:absolute}
+.ll-G{color:var(--navy)}.ll-G .logo-dot{background:var(--rust);top:18%;left:44%}
+.ll-L{color:var(--gold)}.ll-i{color:var(--rust)}.ll-i .logo-dot{background:var(--gold);top:8%;left:38%}
+.ll-F{color:var(--maroon)}.ll-F .logo-dot{background:var(--gold);top:55%;left:25%}
+.ll-S{color:var(--navy)}.ll-S .logo-dot{background:var(--rust);top:12%;left:52%}
+.hero-by{font-family:'Caveat',cursive;font-size:clamp(20px,3vw,32px);color:var(--navy);margin-bottom:12px;animation:fadeUp .8s .15s ease both}
+.hero-by span{font-size:.65em;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.hero-sub{font-size:15px;color:var(--muted);margin-bottom:36px;animation:fadeUp .8s .3s ease both;text-align:center;max-width:420px}
+.hero-btns{display:flex;gap:12px;animation:fadeUp .8s .4s ease both}
+.btn-learn{padding:13px 34px;border-radius:40px;font-size:15px;font-weight:500;border:1.5px solid rgba(26,31,60,.18);background:rgba(255,255,255,.6);color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-play{padding:13px 46px;border-radius:40px;font-size:15px;font-weight:500;background:var(--rust);color:#fff;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+.glyph-row{display:flex;align-items:center;justify-content:center;gap:clamp(18px,3.5vw,52px);margin-top:52px;animation:fadeUp .8s .55s ease both;flex-wrap:wrap}
+.glyph-row svg{width:clamp(56px,7vw,88px);height:clamp(56px,7vw,88px);flex-shrink:0}
+.gr-g1{animation:floatA 3.2s ease-in-out infinite}
+.gr-g2{animation:floatB 4s ease-in-out infinite}
+.gr-g3{animation:spinA 8s linear infinite}
+.gr-g4{animation:floatA 3.8s 1s ease-in-out infinite}
+.gr-g5{animation:floatB 4.5s .5s ease-in-out infinite}
+
+.section-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(26,31,60,.13),transparent)}
+
+/* PLAY SECTION */
+.play-section{padding:72px 36px;position:relative;z-index:1}
+.play-title{font-family:'Fredoka One',sans-serif;font-size:clamp(26px,4vw,40px);color:var(--navy);text-align:center;margin-bottom:36px}
+.play-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1180px;margin:0 auto;align-items:start}
+
+/* COMPOSER PANEL */
+.composer-panel{background:var(--cream);border-radius:20px;border:1px solid rgba(26,31,60,.09);overflow:hidden;box-shadow:0 4px 28px rgba(26,31,60,.07)}
+.composer-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(26,31,60,.07);gap:8px;flex-wrap:wrap}
+.composer-title{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;flex:1}
+.header-right{display:flex;align-items:center;gap:8px}
+.composer-dots{display:flex;gap:5px}
+.composer-dot{width:9px;height:9px;border-radius:50%}
+.cd1{background:#e8674a}.cd2{background:#e8a020}.cd3{background:#4caf72}
+.grid-select-wrap{position:relative}
+.grid-select{appearance:none;-webkit-appearance:none;background:rgba(26,31,60,.06);border:1px solid rgba(26,31,60,.12);border-radius:8px;padding:4px 24px 4px 9px;font-size:11px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;outline:none}
+.grid-select-wrap::after{content:'▾';position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none}
+
+.composer-canvas{width:100%;aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f6efe3;}
+.guide-circle{position:absolute;border-radius:50%;border:1px solid rgba(26,31,60,.055);pointer-events:none}
+.gc1{width:88%;height:88%;top:6%;left:6%}
+.gc2{width:56%;height:56%;top:22%;left:22%}
+
+.drop-grid{position:absolute;inset:0;display:grid;padding:6%;gap:4px;}
+.drop-zone{border:1.5px dashed rgba(26,31,60,.14);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;transition:border-color .18s,background .18s;}
+.drop-zone.empty:hover{border-color:rgba(192,64,26,.4);background:rgba(192,64,26,.05)}
+.drop-zone.filled{border-color:transparent;cursor:default}
+.drop-zone.filled:hover{background:rgba(26,31,60,.04)}
+.drop-zone.center-cell{border-color:transparent;cursor:default}
+.center-logo{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;pointer-events:none}
+.center-logo-text{font-family:'Fredoka One',sans-serif;font-size:clamp(10px,1.6vw,18px);display:flex;gap:1px}
+.clt-G{color:var(--navy)}.clt-L{color:var(--gold)}.clt-i{color:var(--rust)}.clt-F{color:var(--maroon)}.clt-S{color:var(--navy)}
+.center-sub{font-family:'Caveat',cursive;font-size:clamp(8px,1vw,13px);color:var(--muted)}
+.zone-svg-wrap{display:none;position:absolute;inset:0;width:100%;height:100%;align-items:center;justify-content:center}
+.zone-remove{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(192,64,26,.9);color:#fff;font-size:9px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-weight:700}
+.drop-zone.filled:hover .zone-remove{display:flex}
+
+.composer-bottom{padding:11px 12px;border-top:1px solid rgba(26,31,60,.07);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.dl-btn{flex:1;padding:9px 4px;border-radius:10px;font-size:12px;font-weight:500;border:1px solid rgba(26,31,60,.14);background:transparent;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;transition:background .18s,opacity .18s;white-space:nowrap;min-width:80px}
+.dl-btn:hover{background:rgba(26,31,60,.06)}
+.dl-btn:disabled{opacity:.45;cursor:not-allowed}
+.dl-btn.primary{background:var(--rust);border-color:var(--rust);color:#fff}
+.dl-btn.primary:hover{opacity:.88}
+.dl-btn.gif-btn{background:var(--navy);border-color:var(--navy);color:#fff}
+.dl-btn.gif-btn:hover{opacity:.88}
+.dl-btn.clear{flex:0 0 auto;padding:9px 11px}
+.export-status{font-size:11px;color:var(--muted);text-align:center;padding:4px 12px;min-height:18px;width:100%}
+
+/* GLYPH PICKER */
+.glyph-panel{background:var(--cream);border-radius:20px;border:1px solid rgba(26,31,60,.09);overflow:hidden;box-shadow:0 4px 28px rgba(26,31,60,.07);display:flex;flex-direction:column}
+.glyph-panel-header{padding:11px 14px;border-bottom:1px solid rgba(26,31,60,.07);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:6px}
+.glyph-panel-title{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.4px;text-transform:uppercase}
+.glyph-search{padding:6px 12px;border-radius:20px;border:1px solid rgba(26,31,60,.12);background:rgba(255,255,255,.7);font-size:12px;color:var(--text);outline:none;font-family:'DM Sans',sans-serif;width:108px}
+.glyph-scroll{padding:12px;overflow-y:auto;flex:1;max-height:600px}
+.glyph-scroll::-webkit-scrollbar{width:3px}
+.glyph-scroll::-webkit-scrollbar-thumb{background:rgba(26,31,60,.13);border-radius:3px}
+.glyph-pickgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.glyph-cell{aspect-ratio:1;border-radius:11px;background:var(--cell-bg);border:1.5px solid rgba(26,31,60,.07);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;position:relative}
+.glyph-cell:hover{background:#fff;border-color:rgba(192,64,26,.35);transform:scale(1.07)}
+.glyph-cell.selected{border:2px solid var(--rust);background:#fff;box-shadow:0 0 0 3px rgba(192,64,26,.13)}
+.glyph-cell svg{width:72%;height:72%}
+.pick-hint{font-size:11px;color:var(--muted);padding:8px 12px 4px;text-align:center;transition:color .3s}
+
+/* GIF PROGRESS OVERLAY */
+.gif-overlay{position:fixed;inset:0;background:rgba(26,31,60,.65);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.gif-overlay.active{display:flex}
+.gif-box{background:var(--cream);border-radius:20px;padding:28px 32px;max-width:440px;width:92%;text-align:center;box-shadow:0 24px 80px rgba(26,31,60,.25)}
+.gif-box-title{font-family:'Fredoka One',sans-serif;font-size:22px;color:var(--navy);margin-bottom:5px}
+.gif-box-sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.gif-preview{width:200px;height:200px;border-radius:12px;background:#f0e8d8;border:1px solid rgba(26,31,60,.09);margin:0 auto 14px;display:block}
+.gif-progress{height:5px;background:rgba(26,31,60,.1);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.gif-progress-bar{height:100%;background:linear-gradient(90deg,var(--rust),var(--gold));border-radius:4px;width:0%;transition:width .12s}
+.gif-label{font-size:12px;color:var(--muted);min-height:18px;margin-bottom:16px}
+.gif-btns{display:flex;gap:10px;justify-content:center}
+.gif-btn-close{padding:9px 22px;border-radius:40px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;border:1.5px solid rgba(26,31,60,.15);background:transparent;color:var(--text)}
+.gif-btn-dl{padding:9px 28px;border-radius:40px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--rust);border:none;color:#fff;display:none}
+
+/* MAKING-OF */
+.mof-overlay{position:fixed;inset:0;background:rgba(26,31,60,.65);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.mof-overlay.active{display:flex}
+.mof-box{background:var(--cream);border-radius:20px;padding:24px 28px;max-width:500px;width:92%;text-align:center;box-shadow:0 24px 80px rgba(26,31,60,.25)}
+.mof-title{font-family:'Fredoka One',sans-serif;font-size:22px;color:var(--navy);margin-bottom:5px}
+.mof-sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.mof-stage{width:220px;height:220px;border-radius:16px;background:#f0e8d8;border:1px solid rgba(26,31,60,.09);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.mof-progress{height:4px;background:rgba(26,31,60,.1);border-radius:4px;overflow:hidden;margin-bottom:16px}
+.mof-progress-bar{height:100%;background:var(--rust);border-radius:4px;transition:width .35s linear;width:0%}
+.mof-btns{display:flex;gap:10px;justify-content:center}
+.mof-label{font-size:12px;color:var(--muted);min-height:18px;margin-bottom:6px}
+.mof-btn{padding:9px 22px;border-radius:40px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;border:1.5px solid rgba(26,31,60,.15);background:transparent;color:var(--text)}
+.mof-btn.accent{background:var(--rust);border-color:var(--rust);color:#fff}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@keyframes spinA{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.72;transform:scale(.88)}}
+@keyframes wiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.a-spin{animation:spinA 5s linear infinite;transform-origin:center center}
+.a-pulse{animation:pulse 2.6s ease-in-out infinite}
+.a-float{animation:floatA 3.2s ease-in-out infinite}
+.a-wiggle{animation:wiggle 2.4s ease-in-out infinite}
+.a-breathe{animation:breathe 3s ease-in-out infinite}
+
+@media(max-width:820px){nav{padding:13px 18px}.play-section{padding:56px 14px}.play-grid{grid-template-columns:1fr}.glyph-pickgrid{grid-template-columns:repeat(5,1fr)}.hero{padding:96px 18px 56px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div style="display:flex;align-items:baseline;gap:6px">
+    <div class="nav-logo"><span class="nl-G">G</span><span class="nl-L">L</span><span class="nl-i">i</span><span class="nl-F">F</span><span class="nl-S">S</span></div>
+    <div class="nav-by">by Frank</div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-cta" onclick="document.getElementById('play').scrollIntoView({behavior:'smooth'})">Compose</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo">
+    <div class="logo-letter ll-G">G<span class="logo-dot"></span></div>
+    <div class="logo-letter ll-L">L</div>
+    <div class="logo-letter ll-i">i<span class="logo-dot"></span></div>
+    <div class="logo-letter ll-F">F<span class="logo-dot"></span></div>
+    <div class="logo-letter ll-S">S<span class="logo-dot"></span></div>
+  </div>
+  <div class="hero-by"><span>by</span> Frank</div>
+  <div class="hero-sub">Compose living symbols. Download your creation as an animated GIF.</div>
+  <div class="hero-btns">
+    <button class="btn-learn">Learn</button>
+    <button class="btn-play" onclick="document.getElementById('play').scrollIntoView({behavior:'smooth'})">Play</button>
+  </div>
+  <div class="glyph-row">
+    <svg class="gr-g1" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30" stroke="#c0401a" stroke-width="3" stroke-dasharray="5 4"/><circle cx="50" cy="50" r="18" stroke="#e8a020" stroke-width="2.5" fill="none"/><circle cx="50" cy="50" r="7" fill="#c0401a"/><circle cx="78" cy="50" r="5" fill="#e8a020"/></svg>
+    <svg class="gr-g2" viewBox="0 0 100 100" fill="none"><path d="M30 20 Q50 10 70 20 Q80 35 70 50 Q50 65 30 50 Q20 35 30 20Z" stroke="#7a1c1c" stroke-width="3.5" fill="none"/><circle cx="40" cy="38" r="5" fill="#e8a020"/><circle cx="60" cy="38" r="5" fill="#e8a020"/><path d="M38 54 Q50 62 62 54" stroke="#c0401a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+    <svg class="gr-g3" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="34" stroke="#1a1f3c" stroke-width="2.5" stroke-dasharray="5 6"/><circle cx="50" cy="50" r="20" stroke="#1a1f3c" stroke-width="2"/><circle cx="84" cy="50" r="6" fill="#7a1c1c"/><circle cx="50" cy="16" r="5" fill="#e8a020"/></svg>
+    <svg class="gr-g4" viewBox="0 0 100 100" fill="none"><path d="M50 18 L58 40 L82 40 L63 54 L70 78 L50 64 L30 78 L37 54 L18 40 L42 40 Z" stroke="#e8a020" stroke-width="3" fill="none" stroke-linejoin="round"/><circle cx="50" cy="50" r="6" fill="#e8a020"/></svg>
+    <svg class="gr-g5" viewBox="0 0 100 100" fill="none"><path d="M50 50 m0-22 a22 22 0 1 1-0.1 0" stroke="#c0401a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 50 m0-32 a32 32 0 1 0 0.1 0" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="28" r="5" fill="#e8a020"/></svg>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PLAY -->
+<section class="play-section" id="play">
+  <div class="play-title">Play</div>
+  <div class="play-grid">
+
+    <div class="composer-panel">
+      <div class="composer-header">
+        <span class="composer-title">composer &nbsp;<span id="slotCountHdr" style="color:var(--rust);font-weight:600">0 / 9</span></span>
+        <div class="header-right">
+          <div class="grid-select-wrap">
+            <select class="grid-select" id="gridSizeSelect" onchange="changeGridSize(this.value)">
+              <option value="3x3">3×3 (9)</option>
+              <option value="4x4">4×4 (16)</option>
+              <option value="4x5">4×5 (20)</option>
+            </select>
+          </div>
+          <div class="composer-dots"><div class="composer-dot cd1"></div><div class="composer-dot cd2"></div><div class="composer-dot cd3"></div></div>
+        </div>
+      </div>
+      <div class="composer-canvas" id="composerCanvas">
+        <div class="drop-grid" id="dropGrid"></div>
+      </div>
+      <div id="exportStatus" class="export-status"></div>
+      <div class="composer-bottom">
+        <button class="dl-btn gif-btn" id="gifBtn" onclick="startGifExport()">⬇ GIF</button>
+        <button class="dl-btn primary" onclick="openMakingOf()">✦ making-of</button>
+        <button class="dl-btn" id="pngBtn" onclick="downloadSnapshot()">⬇ PNG</button>
+        <button class="dl-btn clear" title="Clear canvas" onclick="clearCanvas()">✕</button>
+      </div>
+    </div>
+
+    <div class="glyph-panel">
+      <div class="glyph-panel-header">
+        <span class="glyph-panel-title">glyphs — pick & place</span>
+        <input class="glyph-search" placeholder="search…" id="glyphSearch" oninput="filterGlyphs(this.value)">
+      </div>
+      <div class="pick-hint" id="pickHint">Select a glyph, then click a slot to place it</div>
+      <div class="glyph-scroll">
+        <div class="glyph-pickgrid" id="glyphGrid"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GIF EXPORT OVERLAY -->
+<div class="gif-overlay" id="gifOverlay">
+  <div class="gif-box">
+    <div class="gif-box-title">Creating your GIF</div>
+    <div class="gif-box-sub">Rendering all frames — your animated composition will download automatically.</div>
+    <canvas class="gif-preview" id="gifPreview" width="200" height="200"></canvas>
+    <div class="gif-progress"><div class="gif-progress-bar" id="gifBar"></div></div>
+    <div class="gif-label" id="gifLabel">Starting…</div>
+    <div class="gif-btns">
+      <button class="gif-btn-close" onclick="closeGifOverlay()">Cancel</button>
+      <button class="gif-btn-dl" id="gifDlBtn">⬇ Download GIF</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAKING-OF -->
+<div class="mof-overlay" id="mofOverlay">
+  <div class="mof-box">
+    <div class="mof-title">Making-of</div>
+    <div class="mof-sub">Watch your composition come alive — glyphs placed one by one.</div>
+    <div class="mof-stage" id="mofStage"></div>
+    <div class="mof-label" id="mofLabel">Ready — press Play</div>
+    <div class="mof-progress"><div class="mof-progress-bar" id="mofBar"></div></div>
+    <div class="mof-btns">
+      <button class="mof-btn" onclick="closeMakingOf()">Close</button>
+      <button class="mof-btn accent" id="mofPlayBtn" onclick="playMakingOf()">▶ Play</button>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+<footer style="padding:34px 44px;text-align:center;font-size:13px;color:var(--muted)">
+  <strong style="color:var(--navy)">GLIFS</strong> <span style="font-family:'Caveat',cursive;font-size:15px">by Frank</span>
+</footer>
+
+<script>
+/* ─── ALL GLYPHS (40+ from original source + expanded) ─── */
+const GLYPHS = [
+  // ── ROW 1: originals ──
+  {n:'target',        a:'a-breathe', c:'#e8a020', s:`<circle cx="20" cy="20" r="14" stroke="#e8a020" stroke-width="2.5" fill="none"/><circle cx="20" cy="20" r="9" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="4" fill="#c0401a"/>`},
+  {n:'bullseye',      a:'a-spin',    c:'#1a1f3c', s:`<circle cx="20" cy="20" r="14" stroke="#1a1f3c" stroke-width="2.5" fill="none"/><circle cx="20" cy="20" r="9" stroke="#1a1f3c" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="4" fill="#1a1f3c"/>`},
+  {n:'scatter dots',  a:'a-breathe', c:'#c0401a', s:`<circle cx="20" cy="20" r="2.5" fill="#c0401a"/><circle cx="12" cy="14" r="2" fill="#e8a020"/><circle cx="28" cy="14" r="2" fill="#e8a020"/><circle cx="10" cy="23" r="2" fill="#7a1c1c"/><circle cx="30" cy="23" r="2" fill="#7a1c1c"/><circle cx="15" cy="30" r="2" fill="#c0401a"/><circle cx="25" cy="30" r="2" fill="#c0401a"/><circle cx="20" cy="8" r="1.5" fill="#e8a020"/><circle cx="20" cy="32" r="1.5" fill="#e8a020"/>`},
+  {n:'antenna',       a:'a-pulse',   c:'#7a1c1c', s:`<line x1="20" y1="8" x2="20" y2="28" stroke="#7a1c1c" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="6" r="3.5" stroke="#c0401a" stroke-width="2" fill="none"/><path d="M12 18 Q20 22 28 18" stroke="#e8a020" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M8 24 Q20 30 32 24" stroke="#e8a020" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="20" cy="30" r="4" fill="#7a1c1c"/>`},
+  {n:'moon dot',      a:'a-float',   c:'#1a1f3c', s:`<path d="M28 10 A14 14 0 1 0 28 30 A10 10 0 1 1 28 10Z" stroke="#1a1f3c" stroke-width="2.5" fill="none"/><circle cx="15" cy="18" r="2.5" fill="#e8a020"/><circle cx="22" cy="13" r="1.5" fill="#e8a020"/>`},
+
+  // ── ROW 2 ──
+  {n:'flag plant',    a:'a-wiggle',  c:'#1a1f3c', s:`<line x1="20" y1="8" x2="20" y2="34" stroke="#1a1f3c" stroke-width="2.5" stroke-linecap="round"/><rect x="8" y="10" width="12" height="3" rx="1" fill="#e8a020"/><rect x="10" y="30" width="8" height="3" rx="1" fill="#7a1c1c"/>`},
+  {n:'face spiral',   a:'a-pulse',   c:'#c0401a', s:`<circle cx="20" cy="18" r="10" stroke="#c0401a" stroke-width="2" fill="none"/><path d="M20 14 a4 4 0 1 1-4 4 a2 2 0 1 0 2 2" stroke="#e8a020" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M14 26 Q20 32 26 26" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="14" cy="22" r="1.5" fill="#7a1c1c"/><circle cx="26" cy="22" r="1.5" fill="#7a1c1c"/>`},
+  {n:'hand wave',     a:'a-wiggle',  c:'#7a1c1c', s:`<path d="M14 32 Q10 24 12 14 Q14 8 18 10" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M18 10 Q22 6 24 12" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M24 12 Q28 8 28 16" stroke="#e8a020" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M28 16 Q32 14 30 22" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M30 22 Q32 30 26 32 Q20 34 14 32" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>`},
+  {n:'sun swirl',     a:'a-spin',    c:'#e8a020', s:`<path d="M20 20 m0-10 a10 10 0 1 1-0.1 0 m0-2 a12 12 0 1 0 0.1 0" stroke="#e8a020" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="20" cy="20" r="3" fill="#c0401a"/>`},
+  {n:'flower blob',   a:'a-breathe', c:'#c0401a', s:`<circle cx="20" cy="20" r="5" fill="#e8a020"/><circle cx="20" cy="10" r="5" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="30" cy="15" r="5" stroke="#7a1c1c" stroke-width="2" fill="none"/><circle cx="30" cy="25" r="5" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="20" cy="30" r="5" stroke="#7a1c1c" stroke-width="2" fill="none"/><circle cx="10" cy="25" r="5" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="10" cy="15" r="5" stroke="#7a1c1c" stroke-width="2" fill="none"/>`},
+  {n:'cloud thing',   a:'a-float',   c:'#c0401a', s:`<path d="M10 26 Q8 18 14 16 Q14 10 20 10 Q26 10 28 16 Q34 16 34 22 Q34 28 28 28 L12 28 Q9 28 10 26Z" stroke="#c0401a" stroke-width="2" fill="none"/>`},
+  {n:'squirrel',      a:'a-wiggle',  c:'#7a1c1c', s:`<circle cx="16" cy="14" r="6" stroke="#7a1c1c" stroke-width="2" fill="none"/><path d="M10 20 Q6 28 10 34" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M22 20 Q30 18 32 26 Q34 34 28 36" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="14" cy="13" r="1.5" fill="#7a1c1c"/><path d="M10 34 L14 34" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/>`},
+
+  // ── ROW 3 ──
+  {n:'skater',        a:'a-wiggle',  c:'#7a1c1c', s:`<circle cx="18" cy="12" r="4" stroke="#7a1c1c" stroke-width="2" fill="none"/><path d="M18 16 Q16 22 14 28" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M14 22 Q20 20 24 22" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 28 Q16 32 22 30" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="10" y="33" width="14" height="3" rx="1.5" fill="#e8a020"/><circle cx="13" cy="37" r="2" fill="#7a1c1c"/><circle cx="21" cy="37" r="2" fill="#7a1c1c"/>`},
+  {n:'two birds',     a:'a-float',   c:'#c0401a', s:`<path d="M8 18 Q12 10 18 14 Q22 10 28 14 Q34 10 36 18" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M10 24 Q14 16 20 20 Q24 16 30 20 Q34 16 36 24" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+  {n:'goggles face',  a:'a-pulse',   c:'#e8a020', s:`<ellipse cx="14" cy="20" rx="6" ry="4" stroke="#e8a020" stroke-width="2" fill="none"/><ellipse cx="26" cy="20" rx="6" ry="4" stroke="#e8a020" stroke-width="2" fill="none"/><line x1="20" y1="20" x2="20" y2="20" stroke="#7a1c1c" stroke-width="2"/><path d="M20 24 Q20 28 20 30" stroke="#7a1c1c" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M8 20 Q11 17 14 20" stroke="#7a1c1c" stroke-width="1.5" fill="none"/><path d="M32 20 Q29 17 26 20" stroke="#7a1c1c" stroke-width="1.5" fill="none"/>`},
+  {n:'snail orbit',   a:'a-spin',    c:'#c0401a', s:`<path d="M20 20 m7 0 a7 7 0 1 1-14 0 a5 5 0 1 0 10 0 a3 3 0 1 1-6 0 a1.5 1.5 0 1 0 3 0" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="27" cy="20" r="2" fill="#e8a020"/>`},
+  {n:'horse neck',    a:'a-wiggle',  c:'#c0401a', s:`<path d="M24 8 Q32 8 32 16 Q32 22 26 24 Q20 26 18 32" stroke="#c0401a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="27" cy="10" r="2" fill="#e8a020"/><circle cx="18" cy="34" r="4" fill="#7a1c1c"/>`},
+  {n:'face left',     a:'a-pulse',   c:'#e8a020', s:`<path d="M26 10 Q34 16 32 24 Q30 32 22 34 Q14 36 10 28 Q6 20 12 14 Q18 8 26 10Z" stroke="#e8a020" stroke-width="2" fill="none"/><path d="M16 20 Q18 22 20 20" stroke="#1a1f3c" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M22 20 Q24 22 26 20" stroke="#1a1f3c" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="8" y1="26" x2="14" y2="28" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/>`},
+
+  // ── ROW 4 ──
+  {n:'croc face',     a:'a-wiggle',  c:'#c0401a', s:`<path d="M6 18 Q12 12 22 14 Q30 12 36 18 Q32 28 22 28 Q12 28 6 18Z" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="14" cy="16" r="2" fill="#c0401a"/><circle cx="26" cy="16" r="2" fill="#c0401a"/><path d="M12 22 L16 26 L20 22 L24 26 L28 22" stroke="#7a1c1c" stroke-width="1.5" fill="none" stroke-linecap="round"/>`},
+  {n:'eye hand',      a:'a-float',   c:'#e8a020', s:`<ellipse cx="20" cy="14" rx="10" ry="6" stroke="#e8a020" stroke-width="2" fill="none"/><circle cx="20" cy="14" r="3" fill="#c0401a"/><path d="M14 20 Q10 28 10 34" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M26 20 Q30 28 30 34" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M10 34 Q20 36 30 34" stroke="#e8a020" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+  {n:'clock face',    a:'a-spin',    c:'#1a1f3c', s:`<circle cx="20" cy="20" r="14" stroke="#1a1f3c" stroke-width="2.5" fill="none"/><line x1="20" y1="10" x2="20" y2="20" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="20" x2="28" y2="20" stroke="#7a1c1c" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="20" r="2" fill="#e8a020"/>`},
+  {n:'bird perch',    a:'a-float',   c:'#c0401a', s:`<path d="M18 10 Q24 6 26 12 Q28 16 24 18 Q20 20 18 24" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="22" cy="10" r="2" fill="#e8a020"/><line x1="18" y1="24" x2="14" y2="30" stroke="#7a1c1c" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="24" x2="22" y2="30" stroke="#7a1c1c" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="32" x2="28" y2="32" stroke="#7a1c1c" stroke-width="2.5" stroke-linecap="round"/>`},
+  {n:'arm point',     a:'a-wiggle',  c:'#c0401a', s:`<path d="M28 10 Q36 14 34 22 Q32 28 26 28 Q20 28 18 22" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M18 22 Q12 26 8 24" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="28" cy="10" r="3" fill="#e8a020"/>`},
+  {n:'eye sweep',     a:'a-pulse',   c:'#7a1c1c', s:`<path d="M6 24 Q10 14 20 18 Q28 14 32 22" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="22" rx="8" ry="6" stroke="#e8a020" stroke-width="2" fill="none"/><circle cx="20" cy="22" r="3" fill="#c0401a"/><path d="M6 28 Q10 24 16 26" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+
+  // ── ROW 5 ──
+  {n:'duck sitting',  a:'a-wiggle',  c:'#7a1c1c', s:`<circle cx="26" cy="13" r="7" stroke="#7a1c1c" stroke-width="2" fill="none"/><circle cx="28" cy="11" r="2" fill="#e8a020"/><path d="M20 20 Q12 22 8 26 Q10 32 16 32 Q22 32 24 28 Q28 28 30 32" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/>`},
+  {n:'reach up',      a:'a-float',   c:'#c0401a', s:`<circle cx="20" cy="12" r="5" stroke="#c0401a" stroke-width="2" fill="none"/><path d="M20 17 L20 28" stroke="#7a1c1c" stroke-width="2.5" stroke-linecap="round"/><path d="M20 21 Q14 18 10 20" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 21 Q26 18 30 20" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 28 Q16 32 14 36" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 28 Q24 32 26 36" stroke="#7a1c1c" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+  {n:'cross blades',  a:'a-spin',    c:'#c0401a', s:`<line x1="10" y1="10" x2="30" y2="30" stroke="#c0401a" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="10" x2="10" y2="30" stroke="#7a1c1c" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="4" fill="#e8a020"/>`},
+  {n:'tower blocks',  a:'a-float',   c:'#7a1c1c', s:`<rect x="10" y="16" width="8" height="14" rx="1" stroke="#7a1c1c" stroke-width="2" fill="none"/><rect x="22" y="12" width="8" height="18" rx="1" stroke="#7a1c1c" stroke-width="2" fill="none"/><line x1="10" y1="20" x2="18" y2="20" stroke="#e8a020" stroke-width="1.5" stroke-linecap="round"/><line x1="22" y1="20" x2="30" y2="20" stroke="#e8a020" stroke-width="1.5" stroke-linecap="round"/>`},
+  {n:'tv face',       a:'a-pulse',   c:'#7a1c1c', s:`<rect x="8" y="12" width="24" height="18" rx="3" stroke="#7a1c1c" stroke-width="2" fill="none"/><circle cx="15" cy="20" r="3" fill="none" stroke="#e8a020" stroke-width="1.5"/><line x1="20" y1="18" x2="28" y2="18" stroke="#c0401a" stroke-width="1.5" stroke-linecap="round"/><line x1="20" y1="22" x2="26" y2="22" stroke="#c0401a" stroke-width="1.5" stroke-linecap="round"/>`},
+  {n:'dots ladder',   a:'a-float',   c:'#e8a020', s:`<circle cx="10" cy="12" r="2" fill="#e8a020"/><circle cx="10" cy="20" r="2" fill="#c0401a"/><circle cx="10" cy="28" r="2" fill="#e8a020"/><line x1="14" y1="8" x2="14" y2="34" stroke="#7a1c1c" stroke-width="2.5" stroke-linecap="round"/><line x1="26" y1="8" x2="26" y2="34" stroke="#7a1c1c" stroke-width="2.5" stroke-linecap="round"/><line x1="14" y1="15" x2="26" y2="15" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="22" x2="26" y2="22" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="29" x2="26" y2="29" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/>`},
+
+  // ── ROW 6 ──
+  {n:'big duck',      a:'a-wiggle',  c:'#c0401a', s:`<circle cx="24" cy="12" r="8" stroke="#c0401a" stroke-width="2.5" fill="none"/><circle cx="27" cy="10" r="2.5" fill="#e8a020"/><path d="M16 20 Q8 22 6 28 Q8 34 16 34 Q22 34 26 30" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M26 30 Q30 28 32 32" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+  {n:'eye orbit',     a:'a-spin',    c:'#c0401a', s:`<ellipse cx="20" cy="20" rx="13" ry="8" stroke="#1a1f3c" stroke-width="2" stroke-dasharray="4 3" fill="none"/><circle cx="20" cy="20" r="6" stroke="#c0401a" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="2.5" fill="#c0401a"/><circle cx="33" cy="20" r="3" fill="#e8a020"/>`},
+  {n:'simple eye',    a:'a-pulse',   c:'#1a1f3c', s:`<path d="M4 20 Q12 8 20 20 Q28 32 36 20 Q28 8 20 20 Q12 32 4 20" stroke="#1a1f3c" stroke-width="2.5" fill="none"/><circle cx="20" cy="20" r="5" fill="#c0401a"/><circle cx="20" cy="20" r="2" fill="#e8a020"/>`},
+  {n:'spark dots',    a:'a-breathe', c:'#e8a020', s:`<circle cx="20" cy="20" r="3" fill="#c0401a"/><circle cx="20" cy="8" r="2.5" fill="#e8a020"/><circle cx="29" cy="11" r="2.5" fill="#c0401a"/><circle cx="32" cy="20" r="2.5" fill="#e8a020"/><circle cx="29" cy="29" r="2.5" fill="#7a1c1c"/><circle cx="20" cy="32" r="2.5" fill="#c0401a"/><circle cx="11" cy="29" r="2.5" fill="#e8a020"/><circle cx="8" cy="20" r="2.5" fill="#7a1c1c"/><circle cx="11" cy="11" r="2.5" fill="#c0401a"/>`},
+  {n:'tri rainbow',   a:'a-float',   c:'#c0401a', s:`<path d="M5 30 A15 15 0 0 1 35 30" stroke="#c0401a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M9 30 A11 11 0 0 1 31 30" stroke="#e8a020" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M13 30 A7 7 0 0 1 27 30" stroke="#1a1f3c" stroke-width="2.5" fill="none" stroke-linecap="round"/>`},
+  {n:'crown head',    a:'a-wiggle',  c:'#e8a020', s:`<path d="M8 28 L12 14 L20 22 L28 14 L32 28 Z" stroke="#e8a020" stroke-width="2.5" fill="none" stroke-linejoin="round"/><circle cx="12" cy="14" r="3" fill="#c0401a"/><circle cx="20" cy="22" r="3" fill="#c0401a"/><circle cx="28" cy="14" r="3" fill="#c0401a"/>`},
+
+  // ── ROW 7 ──
+  {n:'wave dots',     a:'a-wiggle',  c:'#e8a020', s:`<path d="M4 20 Q10 12 16 20 Q22 28 28 20 Q34 12 40 20" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="4" cy="20" r="2" fill="#e8a020"/><circle cx="16" cy="20" r="2" fill="#7a1c1c"/><circle cx="28" cy="20" r="2" fill="#e8a020"/><circle cx="40" cy="20" r="2" fill="#7a1c1c"/>`},
+  {n:'lollipop',      a:'a-float',   c:'#c0401a', s:`<path d="M20 20 m5 0 a5 5 0 1 1-10 0 a4 4 0 1 0 8 0 a3 3 0 1 1-6 0" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M25 20 Q32 18 34 24" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="34" cy="26" r="3" fill="#e8a020"/>`},
+  {n:'twin spirals',  a:'a-spin',    c:'#1a1f3c', s:`<path d="M14 20 m4 0 a4 4 0 1 1-8 0 a3 3 0 1 0 6 0 a2 2 0 1 1-4 0" stroke="#1a1f3c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M26 20 m4 0 a4 4 0 1 1-8 0 a3 3 0 1 0 6 0 a2 2 0 1 1-4 0" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/>`},
+  {n:'wave sweep',    a:'a-wiggle',  c:'#c0401a', s:`<path d="M4 28 Q8 18 12 22 Q16 26 20 16 Q24 6 28 14 Q32 22 36 18" stroke="#c0401a" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="4" cy="28" r="3" fill="#e8a020"/>`},
+  {n:'dot arc',       a:'a-float',   c:'#7a1c1c', s:`<path d="M6 30 A16 16 0 0 1 34 30" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="6" cy="30" r="3" fill="#e8a020"/><circle cx="20" cy="14" r="4" fill="#c0401a"/><circle cx="34" cy="30" r="3" fill="#e8a020"/>`},
+  {n:'curl C',        a:'a-wiggle',  c:'#c0401a', s:`<path d="M30 10 Q16 8 12 18 Q10 26 16 32 Q22 38 32 34" stroke="#c0401a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="30" cy="10" r="3" fill="#e8a020"/><circle cx="32" cy="34" r="3" fill="#e8a020"/>`},
+
+  // ── ROW 8 ──
+  {n:'star scatter',  a:'a-spin',    c:'#e8a020', s:`<line x1="20" y1="6" x2="20" y2="34" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="20" x2="34" y2="20" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/><line x1="9" y1="9" x2="31" y2="31" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="31" y1="9" x2="9" y2="31" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="20" r="3.5" fill="#7a1c1c"/>`},
+  {n:'sun beam',      a:'a-spin',    c:'#e8a020', s:`<circle cx="20" cy="20" r="6" fill="#e8a020"/><line x1="20" y1="6" x2="20" y2="12" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="28" x2="20" y2="34" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="20" x2="12" y2="20" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="20" x2="34" y2="20" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="10" x2="14" y2="14" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="10" x2="26" y2="14" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="30" x2="14" y2="26" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="30" x2="26" y2="26" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/>`},
+  {n:'wave arm',      a:'a-float',   c:'#7a1c1c', s:`<path d="M6 24 Q12 14 20 20 Q28 26 34 16" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="6" cy="24" r="3" fill="#c0401a"/><circle cx="34" cy="16" r="3" fill="#e8a020"/>`},
+  {n:'cone hat',      a:'a-float',   c:'#7a1c1c', s:`<path d="M20 6 L34 36 L6 36 Z" stroke="#7a1c1c" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="9" y1="28" x2="31" y2="28" stroke="#e8a020" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="21" x2="27" y2="21" stroke="#e8a020" stroke-width="1.5" stroke-linecap="round"/>`},
+  {n:'bucket frame',  a:'a-pulse',   c:'#1a1f3c', s:`<rect x="10" y="10" width="20" height="22" rx="2" stroke="#1a1f3c" stroke-width="2.5" fill="none"/><line x1="14" y1="6" x2="10" y2="10" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="6" x2="30" y2="10" stroke="#c0401a" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="18" x2="30" y2="18" stroke="#e8a020" stroke-width="1.5" stroke-linecap="round"/>`},
+  {n:'sun face',      a:'a-breathe', c:'#e8a020', s:`<circle cx="20" cy="20" r="10" stroke="#e8a020" stroke-width="2.5" fill="none"/><circle cx="16" cy="18" r="2" fill="#7a1c1c"/><circle cx="24" cy="18" r="2" fill="#7a1c1c"/><path d="M15 24 Q20 28 25 24" stroke="#c0401a" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="20" y1="6" x2="20" y2="9" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="31" x2="20" y2="34" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="20" x2="9" y2="20" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/><line x1="31" y1="20" x2="34" y2="20" stroke="#e8a020" stroke-width="2.5" stroke-linecap="round"/>`},
+];
+
+/* ─── STATE ─── */
+const GRID_OPTIONS = {'3x3':{cols:3,rows:3,max:9},'4x4':{cols:4,rows:4,max:16},'4x5':{cols:4,rows:5,max:20}};
+let currentGridKey='3x3', slots=[], selectedGlyph=null, mofTimer=null;
+function getG(){return GRID_OPTIONS[currentGridKey]}
+
+/* ─── BUILD GRID ─── */
+function buildDropGrid(){
+  const {cols,rows,max}=getG();
+  slots=new Array(max).fill(null);
+  const dg=document.getElementById('dropGrid');
+  dg.innerHTML='';
+  dg.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  dg.style.gridTemplateRows=`repeat(${rows},1fr)`;
+  dg.style.gap=cols>=4?'3px':'4px';
+  const cIdx=Math.floor(rows/2)*cols+Math.floor(cols/2);
+  for(let i=0;i<max;i++){
+    const zone=document.createElement('div');
+    zone.className='drop-zone'+(i===cIdx?' center-cell':' empty');
+    zone.dataset.idx=i;
+    if(i===cIdx){
+      zone.innerHTML=`<div class="center-logo" id="centerLogo">
+        <div class="center-logo-text"><span class="clt-G">G</span><span class="clt-L">L</span><span class="clt-i">i</span><span class="clt-F">F</span><span class="clt-S">S</span></div>
+        <div class="center-sub" style="font-family:'Caveat',cursive">by Frank</div>
+      </div>
+      <div class="zone-svg-wrap" id="zw${i}"></div>
+      <div class="zone-remove" id="zr${i}">✕</div>`;
+    } else {
+      zone.innerHTML=`<div class="zone-svg-wrap" id="zw${i}"></div><div class="zone-remove" id="zr${i}">✕</div>`;
+    }
+    zone.addEventListener('click',e=>{if(!e.target.classList.contains('zone-remove'))onZoneClick(i,i===cIdx)});
+    zone.querySelector(`#zr${i}`).addEventListener('click',e=>{e.stopPropagation();removeZone(i,i===cIdx)});
+    dg.appendChild(zone);
+  }
+  updateCount();
+}
+
+function onZoneClick(idx,isCenter){
+  if(!selectedGlyph){const h=document.getElementById('pickHint');h.style.color='var(--rust)';setTimeout(()=>h.style.color='',800);return;}
+  placeGlyph(idx,selectedGlyph,isCenter);
+}
+function placeGlyph(idx,g,isCenter){
+  slots[idx]=g;
+  const zone=document.querySelector(`.drop-zone[data-idx="${idx}"]`);
+  const wrap=document.getElementById(`zw${idx}`);
+  if(isCenter){const logo=document.getElementById('centerLogo');if(logo)logo.style.display='none';}
+  zone.classList.remove('empty');zone.classList.add('filled');
+  wrap.style.display='flex';
+  wrap.innerHTML=`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="${g.a}" style="width:80%;height:80%;overflow:visible">${g.s}</svg>`;
+  updateCount();
+}
+function removeZone(idx,isCenter){
+  slots[idx]=null;
+  const zone=document.querySelector(`.drop-zone[data-idx="${idx}"]`);
+  const wrap=document.getElementById(`zw${idx}`);
+  wrap.style.display='none';wrap.innerHTML='';
+  if(isCenter){zone.classList.remove('filled');const logo=document.getElementById('centerLogo');if(logo)logo.style.display='flex';}
+  else{zone.classList.remove('filled');zone.classList.add('empty');}
+  updateCount();
+}
+function clearCanvas(){buildDropGrid();}
+function changeGridSize(v){currentGridKey=v;buildDropGrid();}
+function updateCount(){
+  const filled=slots.filter(Boolean).length;
+  document.getElementById('slotCountHdr').textContent=`${filled} / ${getG().max}`;
+}
+
+/* ─── GLYPH PICKER ─── */
+function buildGlyphGrid(list){
+  const grid=document.getElementById('glyphGrid');
+  grid.innerHTML='';
+  list.forEach((g,i)=>{
+    const cell=document.createElement('div');
+    cell.className='glyph-cell';cell.title=g.n;
+    cell.innerHTML=`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="${g.a}">${g.s}</svg>`;
+    cell.addEventListener('click',()=>{
+      document.querySelectorAll('.glyph-cell').forEach(c=>c.classList.remove('selected'));
+      cell.classList.add('selected');selectedGlyph=g;
+      const h=document.getElementById('pickHint');
+      h.textContent=`"${g.n}" selected — click a slot`;h.style.color='var(--rust)';
+    });
+    grid.appendChild(cell);
+  });
+}
+function filterGlyphs(q){
+  buildGlyphGrid(q.trim()?GLYPHS.filter(g=>g.n.toLowerCase().includes(q.toLowerCase())):GLYPHS);
+}
+
+/* ─── PNG SNAPSHOT ─── */
+function downloadSnapshot(){
+  const btn=document.getElementById('pngBtn');
+  btn.textContent='rendering…';btn.disabled=true;setStatus('Rendering…');
+  const SZ=800,{cols,rows}=getG();
+  const pad=SZ*0.06,cellW=(SZ-pad*2)/cols,cellH=(SZ-pad*2)/rows;
+  let svgInner=`<rect width="${SZ}" height="${SZ}" rx="20" fill="#f6efe3"/>`;
+  const cIdx=Math.floor(rows/2)*cols+Math.floor(cols/2);
+  slots.forEach((g,i)=>{
+    const col=i%cols,row=Math.floor(i/cols);
+    const cx=pad+col*cellW+cellW/2,cy=pad+row*cellH+cellH/2;
+    const glyphSz=Math.min(cellW,cellH)*0.78,ox=cx-glyphSz/2,oy=cy-glyphSz/2;
+    if(i===cIdx&&!g){
+      const fs=Math.min(cellW,cellH)*0.2;
+      svgInner+=`<text x="${cx}" y="${cy-fs*0.2}" font-family="sans-serif" font-size="${fs}" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#1a1f3c">GLiFS</text>`;
+      svgInner+=`<text x="${cx}" y="${cy+fs*0.8}" font-family="cursive" font-size="${fs*0.6}" text-anchor="middle" fill="#6b6478">by Frank</text>`;
+      return;
+    }
+    if(!g)return;
+    svgInner+=`<g transform="translate(${ox},${oy}) scale(${glyphSz/40})">${g.s}</g>`;
+  });
+  svgInner+=`<text x="16" y="${SZ-14}" font-family="sans-serif" font-size="22" font-weight="700" fill="rgba(26,31,60,0.55)">Glifs by Frank</text>`;
+  const svgBlob=new Blob([`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SZ} ${SZ}" width="${SZ}" height="${SZ}">${svgInner}</svg>`],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(svgBlob);
+  const img=new Image();
+  img.onload=()=>{
+    const canvas=document.createElement('canvas');canvas.width=SZ;canvas.height=SZ;
+    const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);URL.revokeObjectURL(url);
+    canvas.toBlob(blob=>{
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='glifs-by-frank.png';a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+      btn.textContent='⬇ PNG';btn.disabled=false;setStatus('PNG downloaded!');setTimeout(()=>setStatus(''),2500);
+    },'image/png');
+  };
+  img.onerror=()=>{const a=document.createElement('a');a.href=url;a.download='glifs-by-frank.svg';a.click();btn.textContent='⬇ PNG';btn.disabled=false;};
+  img.src=url;
+}
+
+/* ─── REAL GIF EXPORT using canvas frame-by-frame ─── */
+// We draw SVG glyphs animated frame by frame onto a canvas, then encode as GIF
+// using a pure-JS GIF encoder (no external lib needed — built-in here)
+
+// Minimal GIF89a encoder
+function encodeGIF(frames, width, height, delay) {
+  // frames: array of Uint8ClampedArray (RGBA, row-major)
+  // Returns Uint8Array of GIF bytes
+
+  function writeUint16LE(v){ return [v & 0xFF, (v >> 8) & 0xFF]; }
+
+  // Palette: we'll quantize to 256 colors using a simple approach
+  // For simplicity, use a fixed warm palette matching the glyphs
+  const palette = buildPalette();
+  const palSize = 256;
+
+  function buildPalette(){
+    const p = [];
+    // Greys / creams
+    for(let i=0;i<64;i++){const v=Math.round(200+i*0.8);p.push([v,v-8,v-18]);}
+    // Oranges/reds/golds
+    for(let i=0;i<48;i++){p.push([Math.min(255,180+i*1.5),Math.round(60+i*1.5),20+Math.round(i*0.3)]);}
+    // Navy blues
+    for(let i=0;i<32;i++){p.push([20+i,25+i,Math.min(255,60+i*3)]);}
+    // Yellows/golds
+    for(let i=0;i<32;i++){p.push([Math.min(255,200+i*1.7),Math.min(255,140+i*1.5),20+Math.round(i*0.5)]);}
+    // Maroons
+    for(let i=0;i<24;i++){p.push([Math.round(100+i*1.5),20+Math.round(i*0.5),20+Math.round(i*0.5)]);}
+    // Pad to 256
+    while(p.length<256)p.push([240,234,220]);
+    return p;
+  }
+
+  const colorCache = new Map();
+  function nearestColor(r,g,b){
+    // quantise to 4-bit per channel for cache key (reduces unique lookups ~64×)
+    const key = ((r>>4)<<8)|((g>>4)<<4)|(b>>4);
+    if(colorCache.has(key)) return colorCache.get(key);
+    let best=0,bestD=1e9;
+    for(let i=0;i<palette.length;i++){
+      const dr=r-palette[i][0],dg=g-palette[i][1],db=b-palette[i][2];
+      const d=dr*dr+dg*dg+db*db;
+      if(d<bestD){bestD=d;best=i;}
+    }
+    colorCache.set(key,best);
+    return best;
+  }
+
+  // LZW compress indices
+  function lzwEncode(indices, minCode){
+    const clearCode = 1 << minCode;
+    const eofCode = clearCode + 1;
+    let codeSize = minCode + 1;
+    let maxCode = (1 << codeSize);
+    const table = new Map();
+    const initTable = ()=>{table.clear(); for(let i=0;i<=eofCode;i++)table.set(String(i),i);};
+    initTable();
+    let nextCode = eofCode + 1;
+    const bits = [];
+    let buf = 0, bufLen = 0;
+    function emitCode(code){
+      buf |= (code << bufLen); bufLen += codeSize;
+      while(bufLen >= 8){bits.push(buf & 0xFF); buf >>= 8; bufLen -= 8;}
+    }
+    emitCode(clearCode);
+    let prefix = String(indices[0]);
+    for(let i=1;i<indices.length;i++){
+      const pixel = String(indices[i]);
+      const key = prefix + ',' + pixel;
+      if(table.has(key)){prefix = key;}
+      else{
+        emitCode(table.get(prefix));
+        if(nextCode < 4096){
+          table.set(key, nextCode++);
+          if(nextCode > maxCode && codeSize < 12){codeSize++;maxCode = 1 << codeSize;}
+        } else {
+          emitCode(clearCode); initTable(); nextCode = eofCode+1; codeSize = minCode+1; maxCode = 1<<codeSize;
+        }
+        prefix = pixel;
+      }
+    }
+    emitCode(table.get(prefix));
+    emitCode(eofCode);
+    if(bufLen>0){bits.push(buf & 0xFF);}
+    // Pack into sub-blocks of max 255 bytes
+    const blocks = [];
+    for(let i=0;i<bits.length;){
+      const len = Math.min(255, bits.length-i);
+      blocks.push(len);
+      for(let j=0;j<len;j++) blocks.push(bits[i++]);
+    }
+    blocks.push(0); // block terminator
+    return blocks;
+  }
+
+  const bytes = [];
+  function push(arr){for(const b of arr) bytes.push(b);}
+  function pushStr(s){for(let i=0;i<s.length;i++) bytes.push(s.charCodeAt(i));}
+
+  // Header
+  pushStr('GIF89a');
+  push(writeUint16LE(width));
+  push(writeUint16LE(height));
+  // Global Color Table Flag = 1, Color Res = 7, Sort = 0, GCT Size = 7 (256 colors)
+  bytes.push(0xF7); // 11110111
+  bytes.push(0); // background color index
+  bytes.push(0); // pixel aspect ratio
+
+  // Global Color Table (256 * 3 bytes)
+  for(let i=0;i<256;i++){
+    const c = palette[i] || [240,234,220];
+    bytes.push(c[0]); bytes.push(c[1]); bytes.push(c[2]);
+  }
+
+  // Netscape loop extension
+  push([0x21,0xFF,0x0B]);
+  pushStr('NETSCAPE2.0');
+  push([0x03,0x01,0x00,0x00,0x00]);
+
+  for(const frame of frames){
+    // Graphic Control Extension
+    push([0x21,0xF9,0x04]);
+    bytes.push(0x00); // no transparency
+    push(writeUint16LE(delay)); // delay in 1/100 sec
+    bytes.push(0x00); // transparent color index
+    bytes.push(0x00); // block terminator
+
+    // Image Descriptor
+    bytes.push(0x2C);
+    push(writeUint16LE(0)); push(writeUint16LE(0));
+    push(writeUint16LE(width)); push(writeUint16LE(height));
+    bytes.push(0x00); // no local color table
+
+    // Convert RGBA to palette indices
+    const indices = new Uint8Array(width * height);
+    for(let p=0;p<width*height;p++){
+      const r=frame[p*4],g=frame[p*4+1],b=frame[p*4+2];
+      indices[p] = nearestColor(r,g,b);
+    }
+
+    // Image data: min LZW code size
+    const minCode = 8;
+    bytes.push(minCode);
+    push(lzwEncode(Array.from(indices), minCode));
+  }
+
+  // Trailer
+  bytes.push(0x3B);
+  return new Uint8Array(bytes);
+}
+
+/* ─── DRAW FRAME ONTO CANVAS ─── */
+function drawCompositionFrame(ctx, t, SZ, cols, rows, cIdx, glyphAnims){
+  ctx.fillStyle='#f6efe3';ctx.fillRect(0,0,SZ,SZ);
+
+  const pad=SZ*0.06, cellW=(SZ-pad*2)/cols, cellH=(SZ-pad*2)/rows;
+
+  slots.forEach((g,i)=>{
+    const col=i%cols, row=Math.floor(i/cols);
+    const cx=pad+col*cellW+cellW/2, cy=pad+row*cellH+cellH/2;
+    const glyphSz=Math.min(cellW,cellH)*0.78;
+
+    if(i===cIdx&&!g){
+      ctx.fillStyle='rgba(26,31,60,0.18)';
+      const fs=Math.min(cellW,cellH)*0.19;
+      ctx.font=`bold ${fs}px 'Fredoka One',sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('GLiFS',cx,cy-fs*0.3);
+      ctx.fillStyle='rgba(107,100,120,0.6)';
+      ctx.font=`${fs*0.55}px cursive`;
+      ctx.fillText('by Frank',cx,cy+fs*0.55);
+      return;
+    }
+    if(!g)return;
+
+    const sc=glyphSz/40;
+    ctx.save();
+    ctx.translate(cx,cy);
+
+    // Animation based on anim class
+    if(g.a==='a-spin')        ctx.rotate(t*0.04);
+    else if(g.a==='a-pulse')  {const s=0.88+0.12*Math.sin(t*0.07);ctx.scale(s,s);}
+    else if(g.a==='a-float')  ctx.translate(0,-5*Math.sin(t*0.04));
+    else if(g.a==='a-wiggle') ctx.rotate(0.18*Math.sin(t*0.08));
+    else if(g.a==='a-breathe'){const s=0.92+0.08*Math.sin(t*0.05);ctx.scale(s,s);}
+
+    ctx.scale(sc,sc);
+    ctx.translate(-20,-20); // SVG viewBox origin
+
+    // Rasterise the SVG paths via a temporary image
+    // We'll use pre-rendered images cached per glyph
+    if(glyphAnims[g.n]){
+      ctx.drawImage(glyphAnims[g.n], 0, 0, 40, 40);
+    }
+
+    ctx.restore();
+  });
+
+  // watermark — bold and visible like Efdot's
+  ctx.fillStyle='rgba(26,31,60,0.55)';
+  ctx.font=`bold ${Math.round(SZ*0.038)}px 'DM Sans',sans-serif`;
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText('Glifs by Frank',Math.round(SZ*0.034),SZ-Math.round(SZ*0.03));
+}
+
+/* Pre-render each glyph SVG to an Image for canvas use */
+let glyphImages = {};
+async function prerenderGlyphs(){
+  const promises = GLYPHS.map(g => new Promise(resolve=>{
+    const svgStr=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="80" height="80">${g.s}</svg>`;
+    const blob=new Blob([svgStr],{type:'image/svg+xml'});
+    const url=URL.createObjectURL(blob);
+    const img=new Image();
+    img.onload=()=>{glyphImages[g.n]=img;URL.revokeObjectURL(url);resolve();}
+    img.onerror=()=>{resolve();}
+    img.src=url;
+  }));
+  await Promise.all(promises);
+}
+
+/* ─── GIF EXPORT ─── */
+let gifRenderAbort = false;
+
+function closeGifOverlay(){
+  gifRenderAbort=true;
+  document.getElementById('gifOverlay').classList.remove('active');
+}
+
+async function startGifExport(){
+  const placed=slots.filter(Boolean);
+  if(placed.length===0){setStatus('Place some glyphs first!');return;}
+
+  document.getElementById('gifOverlay').classList.add('active');
+  document.getElementById('gifBar').style.width='0%';
+  document.getElementById('gifLabel').textContent='Pre-rendering glyphs…';
+  document.getElementById('gifDlBtn').style.display='none';
+  gifRenderAbort=false;
+
+  // Pre-render SVGs if not done
+  if(Object.keys(glyphImages).length < GLYPHS.length){
+    await prerenderGlyphs();
+  }
+
+  const SZ=200; // 200×200 = 4× fewer pixels than 300 → 4× faster encode
+  const {cols,rows}=getG();
+  const cIdx=Math.floor(rows/2)*cols+Math.floor(cols/2);
+  const TOTAL_FRAMES=24; // 24 frames is plenty for a smooth loop
+  const DELAY=6; // 6/100s = ~16fps, smooth and fast to encode
+
+  const previewCanvas=document.getElementById('gifPreview');
+  const prevCtx=previewCanvas.getContext('2d');
+  const offCanvas=document.createElement('canvas');
+  offCanvas.width=SZ;offCanvas.height=SZ;
+  const offCtx=offCanvas.getContext('2d');
+
+  const frames=[];
+
+  // Render all frames, only yield to browser every 6 frames to cut setTimeout overhead
+  for(let f=0;f<TOTAL_FRAMES;f++){
+    if(gifRenderAbort)return;
+    drawCompositionFrame(offCtx,f,SZ,cols,rows,cIdx,glyphImages);
+    prevCtx.drawImage(offCanvas,0,0,200,200);
+    frames.push(new Uint8ClampedArray(offCtx.getImageData(0,0,SZ,SZ).data));
+    document.getElementById('gifBar').style.width=Math.round(((f+1)/TOTAL_FRAMES)*80)+'%';
+    document.getElementById('gifLabel').textContent=`Rendering frame ${f+1} of ${TOTAL_FRAMES}…`;
+    if(f%6===5) await new Promise(r=>setTimeout(r,0)); // yield every 6 frames only
+  }
+
+  if(gifRenderAbort)return;
+  document.getElementById('gifLabel').textContent='Encoding GIF…';
+  document.getElementById('gifBar').style.width='85%';
+  await new Promise(r=>setTimeout(r,0));
+
+  const gifData=encodeGIF(frames,SZ,SZ,DELAY);
+  const blob=new Blob([gifData],{type:'image/gif'});
+  const url=URL.createObjectURL(blob);
+
+  // Auto-download immediately
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='glifs-by-frank.gif';
+  a.click();
+
+  document.getElementById('gifBar').style.width='100%';
+  document.getElementById('gifLabel').textContent='✦ Done! Downloading…';
+  document.getElementById('gifDlBtn').style.display='inline-block';
+  document.getElementById('gifDlBtn').onclick=()=>{
+    const a2=document.createElement('a');a2.href=url;a2.download='glifs-by-frank.gif';a2.click();
+  };
+
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  setStatus('GIF downloaded as glifs-by-frank.gif');
+  setTimeout(()=>setStatus(''),3000);
+}
+
+/* ─── MAKING-OF ─── */
+function openMakingOf(){document.getElementById('mofOverlay').classList.add('active');resetMakingOf();}
+function closeMakingOf(){clearTimeout(mofTimer);document.getElementById('mofOverlay').classList.remove('active');}
+function resetMakingOf(){
+  clearTimeout(mofTimer);
+  document.getElementById('mofStage').innerHTML='';
+  document.getElementById('mofBar').style.width='0%';
+  document.getElementById('mofLabel').textContent='Ready — press Play';
+  document.getElementById('mofPlayBtn').textContent='▶ Play';
+  document.getElementById('mofPlayBtn').onclick=playMakingOf;
+}
+function playMakingOf(){
+  clearTimeout(mofTimer);
+  const stage=document.getElementById('mofStage');
+  stage.innerHTML='';
+  document.getElementById('mofPlayBtn').textContent='↺ Replay';
+  document.getElementById('mofPlayBtn').onclick=playMakingOf;
+
+  let seq=slots.filter(Boolean);
+  if(seq.length===0){const sh=[...GLYPHS].sort(()=>Math.random()-.5);seq=sh.slice(0,7);}
+
+  const total=seq.length,STEP=600;
+  const positions=seq.map((_,i)=>{
+    const angle=(i/total)*Math.PI*2-Math.PI/2;
+    const r=total<=3?52:total<=6?62:total<=10?70:74;
+    return{x:110+r*Math.cos(angle)-22,y:110+r*Math.sin(angle)-22};
+  });
+
+  let step=0;
+  const bar=document.getElementById('mofBar'),label=document.getElementById('mofLabel');
+
+  function next(){
+    if(step>=total){label.textContent='✦ Complete!';bar.style.width='100%';return;}
+    const g=seq[step],pos=positions[step];
+    const sz=total<=4?52:total<=7?42:36;
+    const el=document.createElement('div');
+    el.style.cssText=`position:absolute;left:${pos.x}px;top:${pos.y}px;width:${sz}px;height:${sz}px;
+      opacity:0;transform:scale(0.2) rotate(-25deg);
+      transition:opacity .3s ease,transform .45s cubic-bezier(.34,1.56,.64,1)`;
+    el.innerHTML=`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+      class="${g.a}" style="width:100%;height:100%;overflow:visible">${g.s}</svg>`;
+    stage.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.style.opacity='1';el.style.transform='scale(1) rotate(0deg)';
+    }));
+    label.textContent=`Adding "${g.n}"… (${step+1}/${total})`;
+    bar.style.width=`${((step+1)/total)*100}%`;
+    step++;mofTimer=setTimeout(next,STEP);
+  }
+  next();
+}
+
+function setStatus(msg){document.getElementById('exportStatus').textContent=msg;}
+
+/* ─── INIT ─── */
+buildDropGrid();
+buildGlyphGrid(GLYPHS);
+// Pre-render in background
+prerenderGlyphs();
+</script>
+</body>
+</html>
